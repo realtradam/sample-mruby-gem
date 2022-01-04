@@ -1,15 +1,54 @@
 #include <mruby.h>
 #include <mruby/string.h>
 #include <stdio.h>
+#include "raylib.h"
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 	static mrb_value
 mrb_c_method(mrb_state *mrb, mrb_value self)
 {
 	//mrb_ensure_string_type(mrb, self);
 	//printf("%s: A C Extension\n", mrb_str_to_cstr(mrb, self));
-	printf("A C Extension\n");
+	// Initialization
+	//--------------------------------------------------------------------------------------
 
-	return self;
+	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+	//--------------------------------------------------------------------------------------
+
+	Texture2D texture = LoadTexture("assets/HYPERS.png");
+	struct Vector2 position = { 0, 0 };
+
+	// Main game loop
+	while (!WindowShouldClose())    // Detect window close button or ESC key
+	{
+		// Update
+		//----------------------------------------------------------------------------------
+		// TODO: Update your variables here
+		//----------------------------------------------------------------------------------
+
+		// Draw
+		//----------------------------------------------------------------------------------
+		BeginDrawing();
+
+		ClearBackground(RAYWHITE);
+
+		DrawTextureEx(texture, position, 0.0f, 4.0f, WHITE);
+
+		DrawText("HYPERS!", 500, 50, 20, RED);
+
+		EndDrawing();
+		//----------------------------------------------------------------------------------
+	}
+
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+	CloseWindow();        // Close window and OpenGL context
+	//--------------------------------------------------------------------------------------
+
+	return 0;
 }
 
 void
