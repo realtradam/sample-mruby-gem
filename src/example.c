@@ -48,7 +48,7 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 	CloseWindow();        // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
 
-	return 0;
+	return self;
 }
 
 void
