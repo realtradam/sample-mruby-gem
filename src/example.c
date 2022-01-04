@@ -6,7 +6,8 @@
 mrb_c_method(mrb_state *mrb, mrb_value self)
 {
 	//mrb_ensure_string_type(mrb, self);
-	printf("%s: A C Extension\n", mrb_str_to_cstr(mrb, self));
+	//printf("%s: A C Extension\n", mrb_str_to_cstr(mrb, self));
+	printf("A C Extension\n");
 
 	return self;
 }
