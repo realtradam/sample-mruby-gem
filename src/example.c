@@ -1,7 +1,7 @@
 #include <mruby.h>
 #include <mruby/string.h>
 #include <stdio.h>
-#include "raylib.h"
+#include <raylib.h>
 const int screenWidth = 800;
 const int screenHeight = 450;
 
