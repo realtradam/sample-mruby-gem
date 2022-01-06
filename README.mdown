@@ -4,6 +4,12 @@ Making this gem was a part of the process of figuring out how to make my own dis
 
 Special thanks to [Arnold](https://github.com/arngo) and [Egg](https://github.com/jali-clarke) for helping with this.
 
+## Step 0: Compile Raylib
+
+Ignore this step if you arent using using raylib for your C library.
+
+Build and install raylib using [these instructions](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux). Make sure to install the "Dynamic shared version".
+
 ## Step 1: Making the gem
 
 Make the mruby gem following the instructions from [here](https://github.com/mruby/mruby/blob/master/doc/guides/mrbgems.md) and you can use the examples from [here](https://github.com/mruby/mruby/tree/master/examples/mrbgems) for help. First I made the gem with just ruby and get that to compile(will explain later), then make the gem with C and get that to compile, and finally make the gem with C calling functions from the raylib library.
@@ -14,25 +20,25 @@ Clone the [mruby](https://github.com/mruby/mruby) repo. Inside here we will need
 
 ```ruby
 MRuby::Build.new do |conf|
-  # load specific toolchain settings
-  conf.toolchain
+# load specific toolchain settings
+conf.toolchain
 
-  # Use mrbgems
-  disable_lock # disables being stuck on a single commit
-  conf.gem :core => 'mruby-bin-mirb'
-  conf.gem :git => 'git@github.com:realtradam/sample-mruby-gem.git', :branch => 'test', :options => '-v'
+# Use mrbgems
+disable_lock # disables being stuck on a single commit
+conf.gem :core => 'mruby-bin-mirb'
+conf.gem :git => 'git@github.com:realtradam/sample-mruby-gem.git', :branch => 'test', :options => '-v'
 
-  # include the GEM box
-  conf.gembox 'default'
+# include the GEM box
+conf.gembox 'default'
 
-  # Linker settings
-  conf.linker do |linker|
-    linker.command = ENV['LD'] || 'gcc'
-    linker.flags = ['-lraylib -lGL -lm -lpthread -ldl -lrt -lX11']
-   end
-	
-  conf.enable_bintest
-  conf.enable_test
+# Linker settings
+conf.linker do |linker|
+linker.command = ENV['LD'] || 'gcc'
+linker.flags = ['-lraylib -lGL -lm -lpthread -ldl -lrt -lX11']
+end
+
+conf.enable_bintest
+conf.enable_test
 end
 ```
 
