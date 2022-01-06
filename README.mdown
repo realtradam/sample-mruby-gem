@@ -1,0 +1,51 @@
+# Building/Exporting your own MRuby
+
+Making this gem was a part of the process of figuring out how to make my own distributable executable using mruby which would also includes and use an external C library. Raylib was the library of choice for this.
+
+Special thanks to [Arnold](https://github.com/arngo) and [Egg](https://github.com/jali-clarke) for helping with this.
+
+## Step 1: Making the gem
+
+Make the mruby gem following the instructions from [here](https://github.com/mruby/mruby/blob/master/doc/guides/mrbgems.md) and you can use the examples from [here](https://github.com/mruby/mruby/tree/master/examples/mrbgems) for help. First I made the gem with just ruby and get that to compile(will explain later), then make the gem with C and get that to compile, and finally make the gem with C calling functions from the raylib library.
+
+## Step 2: Configure MRuby
+
+Clone the [mruby](https://github.com/mruby/mruby) repo. Inside here we will need to edit just one file. You need to configure the build file which is in [mruby/build_config/default.rb](https://github.com/mruby/mruby/blob/master/build_config/default.rb). The following is what I used:
+
+```ruby
+MRuby::Build.new do |conf|
+  # load specific toolchain settings
+  conf.toolchain
+
+  # Use mrbgems
+  disable_lock # disables being stuck on a single commit
+  conf.gem :core => 'mruby-bin-mirb'
+  conf.gem :git => 'git@github.com:realtradam/sample-mruby-gem.git', :branch => 'test', :options => '-v'
+
+  # include the GEM box
+  conf.gembox 'default'
+
+  # Linker settings
+  conf.linker do |linker|
+    linker.command = ENV['LD'] || 'gcc'
+    linker.flags = ['-lraylib -lGL -lm -lpthread -ldl -lrt -lX11']
+   end
+	
+  conf.enable_bintest
+  conf.enable_test
+end
+```
+
+A lot of it is just defaults, however about 3-4 lines are added in.
+
+`conf.gem :git => 'git@github.com:realtradam/sample-mruby-gem.git', :branch => 'test', :options => '-v'` is adding our gem from the github repo into the Project. However if you add just this line then the mruby build process will "lock" the commit and not add any changes. This is why I add the `disable_lock` line to disable that lock, and let us use whatever is the most recent commit.
+
+I also added `conf.gem :core => 'mruby-bin-mirb'` so that it would output an interactive ruby executable.
+
+Finally I added linker settings so it would compile correctly with raylib. If you are not using an external library then you dont really need to do this.
+
+## Step 3: Building and Running
+
+To create a build simply run `rake` and it will compile everything. When making changes to your gem you will need to manually do a git pull in the location mruby cloned your gem. The location of the repo is `mruby/build/repos/host/`. Just do a `git pull` before you compile and also make sure to have the `disable_lock` line your build configuration as specified earlier.
+
+You can find the executable here `mruby/build/host/bin/`. Just run the `mirb` executable and call whatever functions you defined in your gem and see them run!
