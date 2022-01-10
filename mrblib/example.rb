@@ -3,3 +3,4 @@ class Test
     puts "yes it does"
   end
 end
+CRubyExtension.c_method

@@ -2,53 +2,63 @@
 #include <mruby/string.h>
 #include <stdio.h>
 #include <raylib.h>
+#if defined(PLATFORM_WEB)
+#include <emscripten/emscripten.h>
+#endif
 const int screenWidth = 800;
 const int screenHeight = 450;
+void UpdateDrawFrame(void);     // Update and Draw one frame
 
 	static mrb_value
 mrb_c_method(mrb_state *mrb, mrb_value self)
 {
-	//mrb_ensure_string_type(mrb, self);
-	//printf("%s: A C Extension\n", mrb_str_to_cstr(mrb, self));
 	// Initialization
 	//--------------------------------------------------------------------------------------
-
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+#if defined(PLATFORM_WEB)
+	emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+#else
+	SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
-
-	Texture2D texture = LoadTexture("assets/HYPERS.png");
-	struct Vector2 position = { 0, 0 };
 
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
-		// Update
-		//----------------------------------------------------------------------------------
-		// TODO: Update your variables here
-		//----------------------------------------------------------------------------------
-
-		// Draw
-		//----------------------------------------------------------------------------------
-		BeginDrawing();
-
-		ClearBackground(RAYWHITE);
-
-		DrawTextureEx(texture, position, 0.0f, 4.0f, WHITE);
-
-		DrawText("HYPERS!", 500, 50, 20, RED);
-
-		EndDrawing();
-		//----------------------------------------------------------------------------------
+		UpdateDrawFrame();
 	}
+#endif
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 	CloseWindow();        // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
 
+
 	return self;
+}
+
+
+//----------------------------------------------------------------------------------
+// Module Functions Definition
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+	// Update
+	//----------------------------------------------------------------------------------
+	// TODO: Update your variables here
+	//----------------------------------------------------------------------------------
+
+	// Draw
+	//----------------------------------------------------------------------------------
+	BeginDrawing();
+
+	ClearBackground(RAYWHITE);
+
+	DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+
+	EndDrawing();
+	//----------------------------------------------------------------------------------
 }
 
 void
