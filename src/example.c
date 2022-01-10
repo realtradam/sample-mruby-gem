@@ -63,7 +63,7 @@ void UpdateDrawFrame(void)
 
 void
 mrb_my_silly_extension_gem_init(mrb_state* mrb) {
-	struct RClass *class_cextension = mrb_define_module(mrb, "CRubyExtension");
+	struct RClass *class_cextension = mrb_define_module(mrb, "Ye");
 	mrb_define_class_method(mrb, class_cextension, "c_method", mrb_c_method, MRB_ARGS_NONE());
 }
 
