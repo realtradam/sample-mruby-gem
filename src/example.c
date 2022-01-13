@@ -17,8 +17,10 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
 #if defined(PLATFORM_WEB)
+        printf("Web!");
 	emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
+        printf("Desktop!");
 	SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
 
