@@ -15,29 +15,26 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-/*
+	/*
 #if defined(PLATFORM_WEB)
-        printf("Web!\n");
-	emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+printf("Web!\n");
+emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
-        printf("Desktop!\n");
-	SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+printf("Desktop!\n");
+SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
-		UpdateDrawFrame();
+	UpdateDrawFrame();
 	}
 #endif
 */
-	while (true)
-	{
-	}
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
-	CloseWindow();        // Close window and OpenGL context
+	//CloseWindow();        // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
 
 
@@ -48,25 +45,26 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
-void UpdateDrawFrame(void)
-{
-	// Update
-	//----------------------------------------------------------------------------------
-	// TODO: Update your variables here
-	//----------------------------------------------------------------------------------
+/*
+	void UpdateDrawFrame(void)
+	{
+// Update
+//----------------------------------------------------------------------------------
+// TODO: Update your variables here
+//----------------------------------------------------------------------------------
 
-	// Draw
-	//----------------------------------------------------------------------------------
-	BeginDrawing();
+// Draw
+//----------------------------------------------------------------------------------
+BeginDrawing();
 
-	ClearBackground(RAYWHITE);
+ClearBackground(RAYWHITE);
 
-	DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
-	EndDrawing();
-	//----------------------------------------------------------------------------------
+EndDrawing();
+//----------------------------------------------------------------------------------
 }
-
+*/
 void
 mrb_my_silly_extension_gem_init(mrb_state* mrb) {
 	struct RClass *class_cextension = mrb_define_module(mrb, "Ye");
