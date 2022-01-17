@@ -15,7 +15,7 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
+/*
 #if defined(PLATFORM_WEB)
         printf("Web!\n");
 	emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
@@ -30,6 +30,10 @@ mrb_c_method(mrb_state *mrb, mrb_value self)
 		UpdateDrawFrame();
 	}
 #endif
+*/
+	while (true)
+	{
+	}
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
